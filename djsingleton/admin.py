@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib import admin, messages
+from django.contrib import admin
 
 
 class SingletonAdmin(admin.ModelAdmin):
@@ -15,6 +15,8 @@ class SingletonAdmin(admin.ModelAdmin):
         super(SingletonAdmin, self).__init__(model, admin_site)
 
     def has_add_permission(self, request):
+        if not self.model.objects.count():
+            return True
         return False
 
     def has_delete_permission(self, request, obj=None):
@@ -28,4 +30,3 @@ class SingletonActiveAdmin(admin.ModelAdmin):
         self.list_display_links = fields[:5]
         self.list_filter = ['active']
         super(SingletonActiveAdmin, self).__init__(model, admin_site)
-
