@@ -1,9 +1,5 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 
 class SingletonModel(models.Model):
@@ -49,7 +45,7 @@ class SingletonActiveModel(models.Model):
             self.__class__.objects.filter(active=True).update(active=False)
         elif not self.active and self.pk:
             self.active = True
-        super(SingletonActiveModel, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     @classmethod
     def get_object(cls):
@@ -59,7 +55,7 @@ class SingletonActiveModel(models.Model):
     def delete(self, *args, **kwargs):
         if self.active:
             raise Exception(_('Active entry will not delete.'))
-        return super(SingletonActiveModel, self).delete(*args, **kwargs)
+        return super().delete(*args, **kwargs)
 
     class Meta:
         abstract = True

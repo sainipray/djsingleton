@@ -1,7 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.contrib import admin
 
 
@@ -12,7 +8,7 @@ class SingletonAdmin(admin.ModelAdmin):
         fields = [field.name for field in model._meta.fields]
         self.list_display = fields[:5]
         self.list_display_links = fields[:5]
-        super(SingletonAdmin, self).__init__(model, admin_site)
+        super().__init__(model, admin_site)
 
     def has_add_permission(self, request):
         if not self.model.objects.count():
@@ -29,4 +25,4 @@ class SingletonActiveAdmin(admin.ModelAdmin):
         self.list_display = fields[:5]
         self.list_display_links = fields[:5]
         self.list_filter = ['active']
-        super(SingletonActiveAdmin, self).__init__(model, admin_site)
+        super().__init__(model, admin_site)
